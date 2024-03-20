@@ -9,8 +9,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20.x'
 
     - name: Set Upstream Remote
       run: git remote add upstream https://github.com/Lissy93/portainer-templates

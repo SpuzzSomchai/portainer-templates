@@ -23,9 +23,13 @@ jobs:
     - name: Set Upstream Remote
       run: git remote add upstream https://github.com/Lissy93/portainer-templates
 
-    - name: Fetch and Merge Changes
+    - name: Fetch Upstream Changes
+      run: git fetch upstream
+
+    - name: Merge Upstream Changes
       run: |
-        git fetch upstream
         git checkout main
-        git merge upstream/main
+        git merge --no-ff --no-commit upstream/main
+        git reset README.md  # Reset changes in README.md
+        git commit -m "Merge upstream changes"
         git push origin main

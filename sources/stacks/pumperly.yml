@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   pumperly:
     image: drumsergio/pumperly:latest
@@ -9,9 +7,13 @@ services:
     environment:
       - DATABASE_URL=postgresql://pumperly:pumperly@postgres:5432/pumperly
       - TZ=UTC
-      - PUMPERLY_DEFAULT_COUNTRY=ES
+      - PUMPERLY_DEFAULT_COUNTRY=${PUMPERLY_DEFAULT_COUNTRY:-ES}
       - PUMPERLY_CLUSTER_STATIONS=true
       - PUMPERLY_EV_ENABLED=1
+      # Optional external services — uncomment and point at your own instances:
+      # - VALHALLA_URL=http://valhalla:8002   # enables route planning
+      # - PHOTON_URL=http://photon:2322        # enables address autocomplete / geocoding
+      # - PUMPERLY_OCM_API_KEY=                 # OpenChargeMap key for EV charging data
     depends_on:
       - postgres
     deploy:

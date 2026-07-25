@@ -1,0 +1,238 @@
+{
+  "templates": [
+    {
+      "categories": [
+        "Web",
+        "Network"
+      ],
+      "description": "The Cloud Native Application Proxy. Source: https://github.com/traefik/traefik",
+      "env": [],
+      "logo": "https://raw.githubusercontent.com/traefik/traefik/master/docs/content/assets/img/traefik.logo.png",
+      "name": "traefik",
+      "platform": "linux",
+      "repository": {
+        "stackfile": "sources/stacks/traefik.yml",
+        "url": "https://github.com/lissy93/portainer-templates"
+      },
+      "restart_policy": "unless-stopped",
+      "title": "Traefik",
+      "type": 3
+    },
+    {
+      "categories": [
+        "Networking",
+        "VPN"
+      ],
+      "description": "ZeroTier network controller with a web UI. Source: https://github.com/sinamics/ztnet",
+      "env": [
+        {
+          "default": "http://localhost:3000",
+          "label": "Public URL of the web UI (e.g. http://your-host-ip:3000)",
+          "name": "NEXTAUTH_URL"
+        },
+        {
+          "default": "changeme-generate-a-long-random-secret",
+          "label": "Auth secret (long random string)",
+          "name": "NEXTAUTH_SECRET"
+        }
+      ],
+      "logo": "https://avatars.githubusercontent.com/u/4173285",
+      "name": "ztnet",
+      "platform": "linux",
+      "repository": {
+        "stackfile": "sources/stacks/ztnet/docker-compose.yml",
+        "url": "https://github.com/lissy93/portainer-templates"
+      },
+      "title": "ZTNet",
+      "type": 3
+    },
+    {
+      "categories": [
+        "DNS",
+        "Networking"
+      ],
+      "description": "An open source authoritative and recursive DNS server with a web console for management. Source: https://github.com/TechnitiumSoftware/DnsServer",
+      "env": [
+        {
+          "default": "dns-server",
+          "label": "Server domain/identity",
+          "name": "DNS_SERVER_DOMAIN"
+        },
+        {
+          "default": "",
+          "label": "Web console admin password (first run only; blank = admin/admin)",
+          "name": "DNS_SERVER_ADMIN_PASSWORD"
+        }
+      ],
+      "image": "technitium/dns-server:latest",
+      "logo": "https://avatars.githubusercontent.com/u/12230362",
+      "name": "technitium-dns",
+      "platform": "linux",
+      "ports": [
+        "5380:5380/tcp",
+        "53:53/tcp",
+        "53:53/udp"
+      ],
+      "restart_policy": "unless-stopped",
+      "title": "Technitium DNS",
+      "type": 1,
+      "volumes": [
+        {
+          "container": "/etc/dns"
+        }
+      ]
+    },
+    {
+      "categories": [
+        "Networking",
+        "Tools"
+      ],
+      "description": "A docker image that packages both cloudflared cli and a simple Web UI to easily start or stop remotely-managed Cloudflare tunnel. Source: https://github.com/WisdomSky/Cloudflared-web",
+      "env": [
+        {
+          "default": "14333",
+          "label": "Web UI port",
+          "name": "WEBUI_PORT"
+        },
+        {
+          "default": "admin",
+          "label": "Web UI username",
+          "name": "BASIC_AUTH_USER"
+        },
+        {
+          "default": "",
+          "label": "Web UI password (set to protect the tunnel controls)",
+          "name": "BASIC_AUTH_PASS"
+        }
+      ],
+      "image": "wisdomsky/cloudflared-web:latest",
+      "logo": "https://raw.githubusercontent.com/WisdomSky/Cloudflared-web/refs/heads/main/app/frontend/public/cloudflare.ico",
+      "name": "cloudflared-web",
+      "network": "host",
+      "platform": "linux",
+      "ports": [],
+      "restart_policy": "unless-stopped",
+      "title": "Cloudflared-web",
+      "type": 1,
+      "volumes": [
+        {
+          "container": "/config"
+        }
+      ]
+    },
+    {
+      "categories": [
+        "Email",
+        "Networking"
+      ],
+      "description": "All-in-one mail server supporting SMTP, IMAP, JMAP, and more, with a built-in web administration interface. Source: https://github.com/stalwartlabs/stalwart",
+      "env": [
+        {
+          "default": "",
+          "label": "Fallback admin as username:password (optional; blank = random password printed to logs)",
+          "name": "STALWART_RECOVERY_ADMIN"
+        }
+      ],
+      "image": "stalwartlabs/stalwart:latest",
+      "logo": "https://avatars.githubusercontent.com/u/114914856",
+      "name": "stalwart-mail",
+      "note": "On first run Stalwart generates a random admin password and writes it to the container logs (docker logs stalwart-mail 2>&1 | grep -A8 'bootstrap mode'). Alternatively set STALWART_RECOVERY_ADMIN to pin a known admin credential. Web admin is on port 8080.",
+      "platform": "linux",
+      "ports": [
+        "8080:8080/tcp",
+        "443:443/tcp",
+        "25:25/tcp",
+        "587:587/tcp",
+        "465:465/tcp",
+        "143:143/tcp",
+        "993:993/tcp"
+      ],
+      "restart_policy": "unless-stopped",
+      "title": "Stalwart Mail Server",
+      "type": 1,
+      "volumes": [
+        {
+          "container": "/etc/stalwart"
+        },
+        {
+          "container": "/var/lib/stalwart"
+        }
+      ]
+    },
+    {
+      "categories": [
+        "File Sharing",
+        "Networking"
+      ],
+      "description": "Local file sharing in your browser, inspired by Apple's AirDrop. Source: https://github.com/schlagmichdoch/PairDrop",
+      "env": [
+        {
+          "default": "1000",
+          "label": "PUID",
+          "name": "PUID"
+        },
+        {
+          "default": "1000",
+          "label": "PGID",
+          "name": "PGID"
+        },
+        {
+          "default": "Etc/UTC",
+          "label": "TZ",
+          "name": "TZ"
+        }
+      ],
+      "image": "lscr.io/linuxserver/pairdrop:latest",
+      "logo": "https://avatars.githubusercontent.com/u/52242352",
+      "name": "pairdrop",
+      "platform": "linux",
+      "ports": [
+        "3000:3000/tcp"
+      ],
+      "restart_policy": "unless-stopped",
+      "title": "PairDrop",
+      "type": 1
+    },
+    {
+      "categories": [
+        "Tools",
+        "Monitoring"
+      ],
+      "description": "Self-hosted passive income orchestrator for bandwidth sharing, DePIN, storage, and GPU compute services. Source: https://github.com/GeiserX/CashPilot",
+      "env": [
+        {
+          "default": "UTC",
+          "label": "Timezone",
+          "name": "TZ"
+        },
+        {
+          "default": "",
+          "label": "Encryption key \u2014 blank to auto-generate (set a fixed value to keep stored credentials across redeploys)",
+          "name": "CASHPILOT_SECRET_KEY"
+        },
+        {
+          "default": "",
+          "label": "Worker enrollment key (optional)",
+          "name": "CASHPILOT_API_KEY"
+        }
+      ],
+      "image": "drumsergio/cashpilot:latest",
+      "logo": "https://avatars.githubusercontent.com/u/9169332",
+      "name": "cashpilot",
+      "note": "This template deploys only the CashPilot UI. To actually deploy and manage earning services you also need the companion worker container (drumsergio/cashpilot-worker) with Docker-socket access, paired via CASHPILOT_API_KEY. See the repo for the full compose.",
+      "platform": "linux",
+      "ports": [
+        "8080:8080/tcp"
+      ],
+      "restart_policy": "unless-stopped",
+      "title": "CashPilot",
+      "type": 1,
+      "volumes": [
+        {
+          "container": "/data"
+        }
+      ]
+    }
+  ],
+  "version": "3"
+}

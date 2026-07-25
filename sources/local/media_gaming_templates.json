@@ -1,0 +1,113 @@
+{
+  "templates": [
+    {
+      "categories": [
+        "Media",
+        "Books"
+      ],
+      "description": "A free and open source comics, manga, and digital book server with OPDS support. Source: https://github.com/stumpapp/stump",
+      "env": [
+        {
+          "default": "1000",
+          "label": "PUID",
+          "name": "PUID"
+        },
+        {
+          "default": "1000",
+          "label": "PGID",
+          "name": "PGID"
+        },
+        {
+          "default": "/config",
+          "label": "STUMP_CONFIG_DIR",
+          "name": "STUMP_CONFIG_DIR"
+        }
+      ],
+      "image": "aaronleopold/stump:latest",
+      "logo": "https://avatars.githubusercontent.com/u/114969632",
+      "name": "stump",
+      "platform": "linux",
+      "ports": [
+        "10801:10801/tcp"
+      ],
+      "restart_policy": "unless-stopped",
+      "title": "Stump",
+      "type": 1,
+      "volumes": [
+        {
+          "container": "/config"
+        },
+        {
+          "container": "/data"
+        }
+      ]
+    },
+    {
+      "categories": [
+        "Gaming",
+        "Other"
+      ],
+      "description": "Dedicated Terraria server in a Docker container. Source: https://github.com/hexlo/terraria-server-docker",
+      "env": [
+        {
+          "default": "changeme123",
+          "label": "Server password",
+          "name": "SERVER_PASSWORD"
+        },
+        {
+          "default": "Welcome to my server!",
+          "label": "Message of the day",
+          "name": "MOTD"
+        }
+      ],
+      "logo": "https://avatars.githubusercontent.com/u/584474",
+      "name": "terraria-server",
+      "platform": "linux",
+      "repository": {
+        "stackfile": "sources/stacks/terraria-server.yml",
+        "url": "https://github.com/lissy93/portainer-templates"
+      },
+      "title": "Terraria Server",
+      "type": 3
+    },
+    {
+      "categories": [
+        "Gaming",
+        "Other"
+      ],
+      "description": "Valheim dedicated gameserver in Docker with full modding support. Source: https://github.com/lloesche/valheim-server-docker",
+      "env": [
+        {
+          "default": "My Server",
+          "label": "Server name (shown in the browser)",
+          "name": "SERVER_NAME"
+        },
+        {
+          "default": "Dedicated",
+          "label": "World/save name",
+          "name": "WORLD_NAME"
+        },
+        {
+          "default": "changeme123",
+          "label": "Server password (minimum 5 characters)",
+          "name": "SERVER_PASS"
+        },
+        {
+          "default": "Etc/UTC",
+          "label": "Timezone",
+          "name": "TZ"
+        }
+      ],
+      "logo": "https://avatars.githubusercontent.com/u/82116562",
+      "name": "valheim-server-docker",
+      "platform": "linux",
+      "repository": {
+        "stackfile": "sources/stacks/valheim-server-docker.yml",
+        "url": "https://github.com/lissy93/portainer-templates"
+      },
+      "title": "Valheim Server",
+      "type": 3
+    }
+  ],
+  "version": "3"
+}

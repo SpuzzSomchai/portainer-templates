@@ -1,6 +1,263 @@
 {
   "entries": [
     {
+      "version": "v1.0.7",
+      "previous": "v1.0.6",
+      "date": "2026-07-25",
+      "templateCount": 676,
+      "added": [],
+      "removed": [],
+      "updated": [
+        {
+          "title": "CashPilot",
+          "fields": [
+            "description",
+            "env",
+            "note"
+          ]
+        },
+        {
+          "title": "CloudBeaver",
+          "fields": [
+            "description"
+          ]
+        },
+        {
+          "title": "Cloudflared-web",
+          "fields": [
+            "description",
+            "env"
+          ]
+        },
+        {
+          "title": "CryptPad",
+          "fields": [
+            "description",
+            "env",
+            "note"
+          ]
+        },
+        {
+          "title": "Dagu",
+          "fields": [
+            "command",
+            "description",
+            "env"
+          ]
+        },
+        {
+          "title": "Databag",
+          "fields": [
+            "description",
+            "env",
+            "note"
+          ]
+        },
+        {
+          "title": "Docmost",
+          "fields": [
+            "description",
+            "env",
+            "note"
+          ]
+        },
+        {
+          "title": "DocuSeal",
+          "fields": [
+            "description",
+            "env",
+            "note"
+          ]
+        },
+        {
+          "title": "Forgejo",
+          "fields": [
+            "description",
+            "image"
+          ]
+        },
+        {
+          "title": "Gatus",
+          "fields": [
+            "description",
+            "image",
+            "note"
+          ]
+        },
+        {
+          "title": "Glance",
+          "fields": [
+            "description",
+            "note"
+          ]
+        },
+        {
+          "title": "GoToSocial",
+          "fields": [
+            "description",
+            "env",
+            "note"
+          ]
+        },
+        {
+          "title": "Gotenberg",
+          "fields": [
+            "description"
+          ]
+        },
+        {
+          "title": "Hivekeep",
+          "fields": [
+            "description",
+            "env",
+            "note"
+          ]
+        },
+        {
+          "title": "HomeLab Monitor",
+          "fields": [
+            "description",
+            "env",
+            "volumes"
+          ]
+        },
+        {
+          "title": "Homebox",
+          "fields": [
+            "description",
+            "env"
+          ]
+        },
+        {
+          "title": "IT-Tools",
+          "fields": [
+            "description"
+          ]
+        },
+        {
+          "title": "Linkding",
+          "fields": [
+            "description",
+            "env"
+          ]
+        },
+        {
+          "title": "Listmonk",
+          "fields": [
+            "description",
+            "env"
+          ]
+        },
+        {
+          "title": "LynxPrompt",
+          "fields": [
+            "description",
+            "env"
+          ]
+        },
+        {
+          "title": "Outline",
+          "fields": [
+            "description",
+            "env",
+            "note"
+          ]
+        },
+        {
+          "title": "PairDrop",
+          "fields": [
+            "description"
+          ]
+        },
+        {
+          "title": "Planka (stack)",
+          "fields": [
+            "description",
+            "env",
+            "note"
+          ]
+        },
+        {
+          "title": "Pumperly",
+          "fields": [
+            "description",
+            "env",
+            "note"
+          ]
+        },
+        {
+          "title": "Reach Me Out",
+          "fields": [
+            "description"
+          ]
+        },
+        {
+          "title": "Stalwart Mail Server",
+          "fields": [
+            "description",
+            "env",
+            "note",
+            "volumes"
+          ]
+        },
+        {
+          "title": "Stump",
+          "fields": [
+            "description"
+          ]
+        },
+        {
+          "title": "Technitium DNS",
+          "fields": [
+            "description",
+            "env"
+          ]
+        },
+        {
+          "title": "Terraria Server",
+          "fields": [
+            "description",
+            "env"
+          ]
+        },
+        {
+          "title": "Traefik (stack)",
+          "fields": [
+            "description"
+          ]
+        },
+        {
+          "title": "Valheim Server",
+          "fields": [
+            "description",
+            "env"
+          ]
+        },
+        {
+          "title": "Woodpecker CI",
+          "fields": [
+            "description",
+            "env",
+            "note"
+          ]
+        },
+        {
+          "title": "ZTNet",
+          "fields": [
+            "description",
+            "env"
+          ]
+        },
+        {
+          "title": "ntfy",
+          "fields": [
+            "description",
+            "env"
+          ]
+        }
+      ]
+    },
+    {
       "version": "v1.0.6",
       "previous": "v1.0.5",
       "date": "2026-07-18",

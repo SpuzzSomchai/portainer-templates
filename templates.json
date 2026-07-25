@@ -2311,7 +2311,7 @@
         "Tools",
         "Monitoring"
       ],
-      "description": "Self-hosted passive income orchestrator for bandwidth sharing, DePIN, storage, and GPU compute services",
+      "description": "Self-hosted passive income orchestrator for bandwidth sharing, DePIN, storage, and GPU compute services. Source: https://github.com/GeiserX/CashPilot",
       "env": [
         {
           "default": "UTC",
@@ -2319,17 +2319,20 @@
           "name": "TZ"
         },
         {
-          "label": "Encryption Key",
+          "default": "",
+          "label": "Encryption key \u2014 blank to auto-generate (set a fixed value to keep stored credentials across redeploys)",
           "name": "CASHPILOT_SECRET_KEY"
         },
         {
-          "label": "API Key (shared with workers)",
+          "default": "",
+          "label": "Worker enrollment key (optional)",
           "name": "CASHPILOT_API_KEY"
         }
       ],
       "image": "drumsergio/cashpilot:latest",
       "logo": "https://avatars.githubusercontent.com/u/9169332",
       "name": "cashpilot",
+      "note": "This template deploys only the CashPilot UI. To actually deploy and manage earning services you also need the companion worker container (drumsergio/cashpilot-worker) with Docker-socket access, paired via CASHPILOT_API_KEY. See the repo for the full compose.",
       "platform": "linux",
       "ports": [
         "8080:8080/tcp"
@@ -2861,7 +2864,7 @@
         "Database",
         "Tools"
       ],
-      "description": "Cloud database manager providing a web interface for working with various databases",
+      "description": "Cloud database manager providing a web interface for working with various databases. Source: https://github.com/dbeaver/cloudbeaver",
       "env": [],
       "image": "dbeaver/cloudbeaver:latest",
       "logo": "https://avatars.githubusercontent.com/u/34743864",
@@ -2919,22 +2922,32 @@
         "Networking",
         "Tools"
       ],
-      "description": "A docker image that packages both cloudflared cli and a simple Web UI to easily start or stop remotely-managed Cloudflare tunnel.",
+      "description": "A docker image that packages both cloudflared cli and a simple Web UI to easily start or stop remotely-managed Cloudflare tunnel. Source: https://github.com/WisdomSky/Cloudflared-web",
       "env": [
         {
           "default": "14333",
-          "label": "WEBUI_PORT",
+          "label": "Web UI port",
           "name": "WEBUI_PORT"
+        },
+        {
+          "default": "admin",
+          "label": "Web UI username",
+          "name": "BASIC_AUTH_USER"
+        },
+        {
+          "default": "",
+          "label": "Web UI password (set to protect the tunnel controls)",
+          "name": "BASIC_AUTH_PASS"
         }
       ],
       "image": "wisdomsky/cloudflared-web:latest",
       "logo": "https://raw.githubusercontent.com/WisdomSky/Cloudflared-web/refs/heads/main/app/frontend/public/cloudflare.ico",
-      "platform": "linux",
+      "name": "cloudflared-web",
       "network": "host",
+      "platform": "linux",
       "ports": [],
       "restart_policy": "unless-stopped",
       "title": "Cloudflared-web",
-      "name": "cloudflared-web",
       "type": 1,
       "volumes": [
         {
@@ -3490,10 +3503,22 @@
         "Productivity",
         "Cloud"
       ],
-      "description": "Collaboration suite, encrypted and open-source",
-      "env": [],
+      "description": "Collaboration suite, encrypted and open-source. Source: https://github.com/cryptpad/cryptpad",
+      "env": [
+        {
+          "default": "https://cryptpad.example.com",
+          "label": "Main domain (full URL) \u2014 your public CryptPad address",
+          "name": "CPAD_MAIN_DOMAIN"
+        },
+        {
+          "default": "https://cryptpad-ui.example.com",
+          "label": "Sandbox domain (full URL) \u2014 MUST be a DIFFERENT origin from the main domain",
+          "name": "CPAD_SANDBOX_DOMAIN"
+        }
+      ],
       "logo": "https://avatars.githubusercontent.com/u/20967956",
       "name": "cryptpad",
+      "note": "CryptPad requires two DIFFERENT domains/origins (main + sandbox) fronted by a reverse proxy that forwards to port 3000 \u2014 mandatory for its XSS sandboxing. Set both to real, distinct domains before deploying.",
       "platform": "linux",
       "repository": {
         "stackfile": "sources/stacks/cryptpad.yml",
@@ -3591,15 +3616,8 @@
         "Automation",
         "Tools"
       ],
-      "command": "dagu start-all",
-      "description": "A powerful, self-contained DAG-based job scheduler with a web UI, YAML definitions, and no dependencies",
-      "env": [
-        {
-          "default": "0.0.0.0",
-          "label": "DAGU_HOST",
-          "name": "DAGU_HOST"
-        }
-      ],
+      "description": "A powerful, self-contained DAG-based job scheduler with a web UI, YAML definitions, and no dependencies. Source: https://github.com/dagu-org/dagu",
+      "env": [],
       "image": "ghcr.io/dagu-org/dagu:latest",
       "logo": "https://avatars.githubusercontent.com/u/131097250",
       "name": "dagu",
@@ -3782,10 +3800,17 @@
         "Messaging",
         "Social"
       ],
-      "description": "A lightweight federated messaging service",
-      "env": [],
+      "description": "A lightweight federated messaging service. Source: https://github.com/balzack/databag",
+      "env": [
+        {
+          "default": "",
+          "label": "Admin dashboard password",
+          "name": "DATABAG_ADMIN_PASSWORD"
+        }
+      ],
       "logo": "https://avatars.githubusercontent.com/u/108325695",
       "name": "databag",
+      "note": "After deploy, open the app, click the settings gear, enter your admin password, set the Federated Host, then use the user icon to create account-registration links.",
       "platform": "linux",
       "repository": {
         "stackfile": "sources/stacks/databag.yml",
@@ -4350,10 +4375,22 @@
         "Documentation",
         "Productivity"
       ],
-      "description": "Open source collaborative wiki and documentation software, an alternative to Confluence and Notion",
-      "env": [],
+      "description": "Open source collaborative wiki and documentation software, an alternative to Confluence and Notion. Source: https://github.com/docmost/docmost",
+      "env": [
+        {
+          "default": "http://localhost:3000",
+          "label": "Public URL Docmost is served from",
+          "name": "APP_URL"
+        },
+        {
+          "default": "",
+          "label": "App secret (>=32 chars) \u2014 generate with: openssl rand -hex 32",
+          "name": "APP_SECRET"
+        }
+      ],
       "logo": "https://avatars.githubusercontent.com/u/172325533",
       "name": "docmost",
+      "note": "Generate APP_SECRET with 'openssl rand -hex 32' (must be at least 32 chars). Set APP_URL to the address you access Docmost from.",
       "platform": "linux",
       "repository": {
         "stackfile": "sources/stacks/docmost.yml",
@@ -4385,11 +4422,18 @@
         "Documents",
         "Productivity"
       ],
-      "description": "Open source DocuSign alternative for document filling and signing",
-      "env": [],
+      "description": "Open source DocuSign alternative for document filling and signing. Source: https://github.com/docusealco/docuseal",
+      "env": [
+        {
+          "default": "",
+          "label": "Public domain (e.g. sign.example.com) \u2014 used for links and emails",
+          "name": "HOST"
+        }
+      ],
       "image": "docuseal/docuseal:latest",
       "logo": "https://avatars.githubusercontent.com/u/138379721",
       "name": "docuseal",
+      "note": "First boot runs migrations and auto-generates SECRET_KEY_BASE (persisted to /data); the UI can take up to a minute to become reachable. Set HOST when serving behind a domain/reverse proxy.",
       "platform": "linux",
       "ports": [
         "3000:3000/tcp"
@@ -6701,7 +6745,7 @@
         "Development",
         "Version Control"
       ],
-      "description": "A self-hosted lightweight software forge, providing Git hosting, code review, issue tracking, and CI/CD",
+      "description": "A self-hosted lightweight software forge, providing Git hosting, code review, issue tracking, and CI/CD. Source: https://codeberg.org/forgejo/forgejo",
       "env": [
         {
           "default": "1000",
@@ -6714,7 +6758,7 @@
           "name": "USER_GID"
         }
       ],
-      "image": "codeberg.org/forgejo/forgejo:14",
+      "image": "codeberg.org/forgejo/forgejo:15",
       "logo": "https://avatars.githubusercontent.com/u/118922216",
       "name": "forgejo",
       "platform": "linux",
@@ -7346,11 +7390,12 @@
         "Monitoring",
         "Networking"
       ],
-      "description": "Automated developer-oriented status page with highly configurable health checks",
+      "description": "Automated developer-oriented status page with highly configurable health checks. Source: https://github.com/TwiN/gatus",
       "env": [],
-      "image": "twinproduction/gatus:latest",
+      "image": "twinproduction/gatus:stable",
       "logo": "https://avatars.githubusercontent.com/u/15699766",
       "name": "gatus",
+      "note": "Mount a config.yaml into /config to define your health checks; Gatus starts with defaults if none is present.",
       "platform": "linux",
       "ports": [
         "8080:8080/tcp"
@@ -7735,11 +7780,12 @@
         "Dashboard",
         "Monitoring"
       ],
-      "description": "A self-hosted dashboard that puts all your feeds in one place",
+      "description": "A self-hosted dashboard that puts all your feeds in one place. Source: https://github.com/glanceapp/glance",
       "env": [],
       "image": "glanceapp/glance:latest",
       "logo": "https://avatars.githubusercontent.com/u/159397742",
       "name": "glance",
+      "note": "Glance needs a glance.yml config file in the mounted /app/config directory to start. Add one (see the project's example configuration) and restart.",
       "platform": "linux",
       "ports": [
         "8080:8080/tcp"
@@ -7828,7 +7874,7 @@
         "Tools",
         "Documents"
       ],
-      "description": "Docker-powered stateless API for PDF files: conversions, generation, merging, and more",
+      "description": "Docker-powered stateless API for PDF files: conversions, generation, merging, and more. Source: https://github.com/gotenberg/gotenberg",
       "env": [],
       "image": "gotenberg/gotenberg:8",
       "logo": "https://avatars.githubusercontent.com/u/66820499",
@@ -7890,17 +7936,33 @@
         "Social",
         "Fediverse"
       ],
-      "description": "An ActivityPub social network server written in Go, providing a lightweight alternative to Mastodon",
+      "description": "An ActivityPub social network server written in Go, providing a lightweight alternative to Mastodon. Source: https://codeberg.org/superseriousbusiness/gotosocial",
       "env": [
         {
           "default": "localhost",
-          "label": "GTS_HOST",
+          "label": "Your public domain (cannot be changed later)",
           "name": "GTS_HOST"
+        },
+        {
+          "default": "sqlite",
+          "label": "Database type",
+          "name": "GTS_DB_TYPE"
+        },
+        {
+          "default": "/gotosocial/storage/sqlite.db",
+          "label": "SQLite database file (kept on the storage volume)",
+          "name": "GTS_DB_ADDRESS"
+        },
+        {
+          "default": "false",
+          "label": "Use built-in Let's Encrypt (set false when behind a reverse proxy)",
+          "name": "GTS_LETSENCRYPT_ENABLED"
         }
       ],
       "image": "superseriousbusiness/gotosocial:latest",
       "logo": "https://avatars.githubusercontent.com/u/79751420",
       "name": "gotosocial",
+      "note": "Set GTS_HOST to your public domain before first run (it cannot be changed afterwards). GoToSocial serves HTTP on :8080 \u2014 front it with an HTTPS reverse proxy. After the stack is up, create your first user with the CLI: docker exec into the container and run 'gotosocial admin account create' then 'gotosocial admin account promote'. See https://docs.gotosocial.org",
       "platform": "linux",
       "ports": [
         "8080:8080/tcp"
@@ -8751,28 +8813,41 @@
       "maintainer": "https://github.com/technorabilia/portainer-templates/"
     },
     {
-      "type": 1,
-      "title": "Hivekeep",
-      "name": "hivekeep",
-      "description": "Self-hosted platform of autonomous, persistent personal AI agents that collaborate, remember, and build their own tools. Reachable via Telegram, WhatsApp, Slack, Discord, Signal and Matrix. Single container with Bun and SQLite, no external infrastructure.",
       "categories": [
         "AI",
         "Productivity",
         "Self Hosted"
       ],
-      "platform": "linux",
-      "logo": "https://hivekeep.app/apple-touch-icon.png",
+      "description": "Self-hosted platform of autonomous, persistent personal AI agents that collaborate, remember, and build their own tools. Reachable via Telegram, WhatsApp, Slack, Discord, Signal and Matrix. Single container with Bun and SQLite, no external infrastructure. Source: https://github.com/MarlBurroW/hivekeep",
+      "env": [
+        {
+          "default": "0.0.0.0",
+          "label": "Bind address \u2014 keep 0.0.0.0 so the port mapping is reachable",
+          "name": "HOST"
+        },
+        {
+          "default": "http://localhost:3000",
+          "label": "External URL for links and webhooks",
+          "name": "PUBLIC_URL"
+        }
+      ],
       "image": "ghcr.io/marlburrow/hivekeep:latest",
+      "logo": "https://hivekeep.app/apple-touch-icon.png",
+      "name": "hivekeep",
+      "note": "LLM provider keys are added in-app after first-run onboarding, not via environment. If the app is unreachable after deploy, ensure HOST=0.0.0.0.",
+      "platform": "linux",
       "ports": [
         "3000:3000/tcp"
       ],
+      "restart_policy": "unless-stopped",
+      "title": "Hivekeep",
+      "type": 1,
       "volumes": [
         {
           "container": "/app/data",
           "bind": "/var/lib/hivekeep"
         }
       ],
-      "restart_policy": "unless-stopped",
       "id": 228
     },
     {
@@ -8950,8 +9025,14 @@
         "Inventory",
         "Productivity"
       ],
-      "description": "Inventory and organization system built for the home user",
-      "env": [],
+      "description": "Inventory and organization system built for the home user. Source: https://github.com/sysadminsmedia/homebox",
+      "env": [
+        {
+          "default": "UTC",
+          "label": "Timezone",
+          "name": "TZ"
+        }
+      ],
       "image": "ghcr.io/sysadminsmedia/homebox:latest",
       "logo": "https://avatars.githubusercontent.com/u/151488376",
       "name": "homebox",
@@ -9110,19 +9191,19 @@
         "Monitoring",
         "Homelab"
       ],
-      "description": "Self-hosted homelab dashboard, one container. Per-container GPU/VRAM attribution (which process holds the card, not just total load), Docker health/logs, systemd status, host vitals (CPU/RAM/disk/temps), multiple hosts over SSH. Alerts via Discord/ntfy/Telegram. Read-only MCP server on :9810. MIT.",
+      "description": "Self-hosted homelab dashboard, one container. Per-container GPU/VRAM attribution (which process holds the card, not just total load), Docker health/logs, systemd status, host vitals (CPU/RAM/disk/temps), multiple hosts over SSH. Alerts via Discord/ntfy/Telegram. Read-only MCP server on :9810. MIT. Source: https://github.com/SikamikanikoBG/homelab-monitor",
       "env": [
         {
           "default": "10",
-          "label": "SAMPLE_INTERVAL_SECONDS",
-          "name": "SAMPLE_INTERVAL_SECONDS",
-          "description": "Polling interval in seconds (default 10)"
+          "description": "Seconds between samples",
+          "label": "SAMPLE_INTERVAL",
+          "name": "SAMPLE_INTERVAL"
         },
         {
           "default": "180",
-          "label": "HISTORY_DAYS",
-          "name": "HISTORY_DAYS",
-          "description": "Days of history to retain"
+          "description": "How long history is kept (days)",
+          "label": "RETENTION_DAYS",
+          "name": "RETENTION_DAYS"
         }
       ],
       "image": "sikamikaniko123/homelab-monitor:latest",
@@ -9141,7 +9222,7 @@
           "readonly": true
         },
         {
-          "container": "/app/data"
+          "container": "/data"
         }
       ],
       "id": 239
@@ -10252,7 +10333,7 @@
         "Tools",
         "Productivity"
       ],
-      "description": "Collection of handy online tools for developers, with great UX",
+      "description": "Collection of handy online tools for developers, with great UX. Source: https://github.com/CorentinTh/it-tools",
       "env": [],
       "image": "corentinth/it-tools:latest",
       "logo": "https://avatars.githubusercontent.com/u/25065347",
@@ -12125,17 +12206,22 @@
         "Bookmarks",
         "Productivity"
       ],
-      "description": "Self-hosted bookmark manager that is minimal and fast",
+      "description": "Self-hosted bookmark manager that is minimal and fast. Source: https://github.com/sissbruecker/linkding",
       "env": [
         {
           "default": "admin",
-          "label": "LD_SUPERUSER_NAME",
+          "label": "Admin username",
           "name": "LD_SUPERUSER_NAME"
         },
         {
           "default": "changeme",
-          "label": "LD_SUPERUSER_PASSWORD",
+          "label": "Admin password",
           "name": "LD_SUPERUSER_PASSWORD"
+        },
+        {
+          "default": "",
+          "label": "Admin email (optional)",
+          "name": "LD_SUPERUSER_EMAIL"
         }
       ],
       "image": "sissbruecker/linkding:latest",
@@ -12177,8 +12263,19 @@
         "Email",
         "Marketing"
       ],
-      "description": "High performance self-hosted newsletter and mailing list manager with a modern dashboard",
-      "env": [],
+      "description": "High performance self-hosted newsletter and mailing list manager with a modern dashboard. Source: https://github.com/knadh/listmonk",
+      "env": [
+        {
+          "default": "admin",
+          "label": "Super-admin username (set on first install)",
+          "name": "LISTMONK_ADMIN_USER"
+        },
+        {
+          "default": "",
+          "label": "Super-admin password (min 8 chars; blank = first-run setup screen)",
+          "name": "LISTMONK_ADMIN_PASSWORD"
+        }
+      ],
       "logo": "https://avatars.githubusercontent.com/u/17838164",
       "name": "listmonk",
       "platform": "linux",
@@ -12706,8 +12803,24 @@
         "Development",
         "Productivity"
       ],
-      "description": "Self-hostable AI config management platform for AGENTS.md, CLAUDE.md, Cursor rules, and 30+ AI assistant formats",
-      "env": [],
+      "description": "Self-hostable AI config management platform for AGENTS.md, CLAUDE.md, Cursor rules, and 30+ AI assistant formats. Source: https://github.com/GeiserX/LynxPrompt",
+      "env": [
+        {
+          "default": "",
+          "label": "Session secret \u2014 generate with: openssl rand -base64 32",
+          "name": "NEXTAUTH_SECRET"
+        },
+        {
+          "default": "http://localhost:3000",
+          "label": "Public base URL",
+          "name": "APP_URL"
+        },
+        {
+          "default": "",
+          "label": "Super-admin account email",
+          "name": "SUPERADMIN_EMAIL"
+        }
+      ],
       "logo": "https://avatars.githubusercontent.com/u/9169332",
       "name": "lynxprompt",
       "platform": "linux",
@@ -15902,8 +16015,19 @@
         "Messaging"
       ],
       "command": "serve --cache-file /var/cache/ntfy/cache.db",
-      "description": "Simple HTTP-based pub-sub notification service. Send push notifications to your phone or desktop via PUT/POST",
-      "env": [],
+      "description": "Simple HTTP-based pub-sub notification service. Send push notifications to your phone or desktop via PUT/POST. Source: https://github.com/binwiederhier/ntfy",
+      "env": [
+        {
+          "default": "http://localhost:8080",
+          "label": "Public base URL (e.g. https://ntfy.example.com) \u2014 needed for attachments and links",
+          "name": "NTFY_BASE_URL"
+        },
+        {
+          "default": "UTC",
+          "label": "Timezone (affects scheduled delivery)",
+          "name": "TZ"
+        }
+      ],
       "image": "binwiederhier/ntfy:latest",
       "logo": "https://avatars.githubusercontent.com/u/664597",
       "name": "ntfy",
@@ -17080,192 +17204,50 @@
         "Productivity",
         "Social"
       ],
-      "description": "Open source collaborative knowledge base for modern teams",
+      "description": "Open source collaborative knowledge base for modern teams. Source: https://github.com/outline/outline",
       "env": [
         {
-          "default": "production",
-          "label": "NODE_ENV",
-          "name": "NODE_ENV"
-        },
-        {
-          "default": "",
-          "label": "SECRET_KEY",
+          "label": "Secret key \u2014 generate with: openssl rand -hex 32",
           "name": "SECRET_KEY"
         },
         {
-          "default": "",
-          "label": "UTILS_SECRET",
+          "label": "Utils secret \u2014 generate with: openssl rand -hex 32",
           "name": "UTILS_SECRET"
         },
         {
-          "default": "",
-          "label": "DATABASE_URL",
-          "name": "DATABASE_URL"
-        },
-        {
-          "default": "",
-          "label": "DATABASE_URL_TEST",
-          "name": "DATABASE_URL_TEST"
-        },
-        {
-          "default": "",
-          "label": "DATABASE_CONNECTION_POOL_MIN",
-          "name": "DATABASE_CONNECTION_POOL_MIN"
-        },
-        {
-          "default": "",
-          "label": "DATABASE_CONNECTION_POOL_MAX",
-          "name": "DATABASE_CONNECTION_POOL_MAX"
-        },
-        {
-          "default": "",
-          "label": "REDIS_URL",
-          "name": "REDIS_URL"
-        },
-        {
-          "default": "",
-          "label": "URL",
+          "default": "http://localhost:3000",
+          "label": "Public URL Outline is served from",
           "name": "URL"
         },
         {
-          "default": "3000",
-          "label": "PORT",
-          "name": "PORT"
-        },
-        {
           "default": "",
-          "label": "COLLABORATION_URL",
-          "name": "COLLABORATION_URL"
-        },
-        {
-          "default": "",
-          "label": "GOOGLE_CLIENT_ID",
-          "name": "GOOGLE_CLIENT_ID"
-        },
-        {
-          "default": "",
-          "label": "GOOGLE_CLIENT_SECRET",
-          "name": "GOOGLE_CLIENT_SECRET"
-        },
-        {
-          "default": "",
-          "label": "SSL_KEY",
-          "name": "SSL_KEY"
-        },
-        {
-          "default": "",
-          "label": "SSL_CERT",
-          "name": "SSL_CERT"
-        },
-        {
-          "default": "true",
-          "label": "FORCE_HTTPS",
-          "name": "FORCE_HTTPS"
-        },
-        {
-          "default": "true",
-          "label": "ENABLE_UPDATES",
-          "name": "ENABLE_UPDATES"
-        },
-        {
-          "default": "1",
-          "label": "WEB_CONCURRENCY",
-          "name": "WEB_CONCURRENCY"
-        },
-        {
-          "default": "5120000",
-          "label": "MAXIMUM_IMPORT_SIZE",
-          "name": "MAXIMUM_IMPORT_SIZE"
-        },
-        {
-          "default": "http",
-          "label": "DEBUG",
-          "name": "DEBUG"
-        },
-        {
-          "default": "info",
-          "label": "LOG_LEVEL",
-          "name": "LOG_LEVEL"
-        },
-        {
-          "default": "",
-          "label": "GOOGLE_ANALYTICS_ID",
-          "name": "GOOGLE_ANALYTICS_ID"
-        },
-        {
-          "default": "",
-          "label": "SENTRY_DSN",
-          "name": "SENTRY_DSN"
-        },
-        {
-          "default": "",
-          "label": "SENTRY_TUNNEL",
-          "name": "SENTRY_TUNNEL"
-        },
-        {
-          "default": "",
-          "label": "SMTP_HOST",
+          "label": "SMTP host (enables email sign-in)",
           "name": "SMTP_HOST"
         },
         {
           "default": "",
-          "label": "SMTP_PORT",
+          "label": "SMTP port",
           "name": "SMTP_PORT"
         },
         {
           "default": "",
-          "label": "SMTP_USERNAME",
+          "label": "SMTP username",
           "name": "SMTP_USERNAME"
         },
         {
           "default": "",
-          "label": "SMTP_PASSWORD",
+          "label": "SMTP password",
           "name": "SMTP_PASSWORD"
         },
         {
           "default": "",
-          "label": "SMTP_FROM_EMAIL",
+          "label": "SMTP from address",
           "name": "SMTP_FROM_EMAIL"
-        },
-        {
-          "default": "",
-          "label": "SMTP_REPLY_EMAIL",
-          "name": "SMTP_REPLY_EMAIL"
-        },
-        {
-          "default": "",
-          "label": "SMTP_TLS_CIPHERS",
-          "name": "SMTP_TLS_CIPHERS"
-        },
-        {
-          "default": "true",
-          "label": "SMTP_SECURE",
-          "name": "SMTP_SECURE"
-        },
-        {
-          "default": "en_US",
-          "label": "DEFAULT_LANGUAGE",
-          "name": "DEFAULT_LANGUAGE"
-        },
-        {
-          "default": "true",
-          "label": "RATE_LIMITER_ENABLED",
-          "name": "RATE_LIMITER_ENABLED"
-        },
-        {
-          "default": "1000",
-          "label": "RATE_LIMITER_REQUESTS",
-          "name": "RATE_LIMITER_REQUESTS"
-        },
-        {
-          "default": "60",
-          "label": "RATE_LIMITER_DURATION_WINDOW",
-          "name": "RATE_LIMITER_DURATION_WINDOW"
         }
       ],
       "logo": "https://avatars.githubusercontent.com/u/1765001",
       "name": "outline",
-      "note": "Open source collaborative knowledge base for modern teams",
+      "note": "Outline needs an authentication provider to sign in: either fill in the SMTP fields above for email (magic-link) sign-in, or add an OIDC/Google/Slack provider by editing the stack. Generate SECRET_KEY and UTILS_SECRET with 'openssl rand -hex 32'. Uploads are stored on a local volume (no S3/MinIO required).",
       "platform": "linux",
       "repository": {
         "stackfile": "sources/stacks/outline.yml",
@@ -17423,7 +17405,7 @@
         "File Sharing",
         "Networking"
       ],
-      "description": "Local file sharing in your browser, inspired by Apple's AirDrop",
+      "description": "Local file sharing in your browser, inspired by Apple's AirDrop. Source: https://github.com/schlagmichdoch/PairDrop",
       "env": [
         {
           "default": "1000",
@@ -18576,10 +18558,42 @@
         "Productivity",
         "Project Management"
       ],
-      "description": "Open source Trello-like kanban board for project management built with React and Node.js",
-      "env": [],
+      "description": "Open source Trello-like kanban board for project management built with React and Node.js. Source: https://github.com/plankanban/planka",
+      "env": [
+        {
+          "default": "http://localhost:3000",
+          "label": "Public URL you access Planka at (must EXACTLY match the browser address)",
+          "name": "BASE_URL"
+        },
+        {
+          "default": "",
+          "label": "Session secret \u2014 generate with: openssl rand -hex 64",
+          "name": "SECRET_KEY"
+        },
+        {
+          "default": "demo@demo.demo",
+          "label": "First admin email",
+          "name": "DEFAULT_ADMIN_EMAIL"
+        },
+        {
+          "default": "changeme",
+          "label": "First admin password",
+          "name": "DEFAULT_ADMIN_PASSWORD"
+        },
+        {
+          "default": "Admin User",
+          "label": "First admin display name",
+          "name": "DEFAULT_ADMIN_NAME"
+        },
+        {
+          "default": "admin",
+          "label": "First admin username",
+          "name": "DEFAULT_ADMIN_USERNAME"
+        }
+      ],
       "logo": "https://avatars.githubusercontent.com/u/64215741",
       "name": "planka",
+      "note": "BASE_URL must EXACTLY match the URL you open Planka at (localhost, IP, or domain) or login fails. Generate SECRET_KEY with 'openssl rand -hex 64'. The DEFAULT_ADMIN_* fields seed the first admin on first boot \u2014 log in with them, then change the password.",
       "platform": "linux",
       "repository": {
         "stackfile": "sources/stacks/planka.yml",
@@ -19325,10 +19339,17 @@
         "Tools",
         "Networking"
       ],
-      "description": "Open-source fuel and EV route planner with real-time prices across 36 countries",
-      "env": [],
+      "description": "Open-source fuel and EV route planner with real-time prices across 36 countries. Source: https://github.com/GeiserX/Pumperly",
+      "env": [
+        {
+          "default": "ES",
+          "label": "Default country (ISO 3166-1 alpha-2) for the initial map view",
+          "name": "PUMPERLY_DEFAULT_COUNTRY"
+        }
+      ],
       "logo": "https://avatars.githubusercontent.com/u/9169332",
       "name": "pumperly",
+      "note": "Fuel prices for the default country work out of the box. Route planning and address autocomplete are DISABLED unless you add external VALHALLA_URL (routing) and PHOTON_URL (geocoding) services by editing the stack; EV charging data needs an OpenChargeMap key (PUMPERLY_OCM_API_KEY).",
       "platform": "linux",
       "repository": {
         "stackfile": "sources/stacks/pumperly.yml",
@@ -20253,7 +20274,7 @@
         "Web",
         "Tools"
       ],
-      "description": "Static, config-driven link-in-bio page. Profile card, tappable links, vCard download, QR share \u2014 all driven from a single YAML file baked at build time.",
+      "description": "Static, config-driven link-in-bio page. Profile card, tappable links, vCard download, QR share \u2014 all driven from a single YAML file baked at build time. Source: https://github.com/kartikeychoudhary/Reach-me-out",
       "env": [],
       "image": "kartikey31choudhary/reach-me-out:latest",
       "logo": "https://raw.githubusercontent.com/kartikeychoudhary/Reach-me-out/main/public/logo.svg",
@@ -22514,11 +22535,18 @@
         "Email",
         "Networking"
       ],
-      "description": "All-in-one mail server supporting SMTP, IMAP, JMAP, and more, with a built-in web administration interface",
-      "env": [],
+      "description": "All-in-one mail server supporting SMTP, IMAP, JMAP, and more, with a built-in web administration interface. Source: https://github.com/stalwartlabs/stalwart",
+      "env": [
+        {
+          "default": "",
+          "label": "Fallback admin as username:password (optional; blank = random password printed to logs)",
+          "name": "STALWART_RECOVERY_ADMIN"
+        }
+      ],
       "image": "stalwartlabs/stalwart:latest",
       "logo": "https://avatars.githubusercontent.com/u/114914856",
       "name": "stalwart-mail",
+      "note": "On first run Stalwart generates a random admin password and writes it to the container logs (docker logs stalwart-mail 2>&1 | grep -A8 'bootstrap mode'). Alternatively set STALWART_RECOVERY_ADMIN to pin a known admin credential. Web admin is on port 8080.",
       "platform": "linux",
       "ports": [
         "8080:8080/tcp",
@@ -22534,7 +22562,10 @@
       "type": 1,
       "volumes": [
         {
-          "container": "/opt/stalwart"
+          "container": "/etc/stalwart"
+        },
+        {
+          "container": "/var/lib/stalwart"
         }
       ],
       "id": 568
@@ -22690,7 +22721,7 @@
         "Media",
         "Books"
       ],
-      "description": "A free and open source comics, manga, and digital book server with OPDS support",
+      "description": "A free and open source comics, manga, and digital book server with OPDS support. Source: https://github.com/stumpapp/stump",
       "env": [
         {
           "default": "1000",
@@ -23344,12 +23375,17 @@
         "DNS",
         "Networking"
       ],
-      "description": "An open source authoritative and recursive DNS server with a web console for management",
+      "description": "An open source authoritative and recursive DNS server with a web console for management. Source: https://github.com/TechnitiumSoftware/DnsServer",
       "env": [
         {
           "default": "dns-server",
-          "label": "DNS_SERVER_DOMAIN",
+          "label": "Server domain/identity",
           "name": "DNS_SERVER_DOMAIN"
+        },
+        {
+          "default": "",
+          "label": "Web console admin password (first run only; blank = admin/admin)",
+          "name": "DNS_SERVER_ADMIN_PASSWORD"
         }
       ],
       "image": "technitium/dns-server:latest",
@@ -23481,8 +23517,19 @@
         "Gaming",
         "Other"
       ],
-      "description": "Dedicated Terraria server in a Docker container",
-      "env": [],
+      "description": "Dedicated Terraria server in a Docker container. Source: https://github.com/hexlo/terraria-server-docker",
+      "env": [
+        {
+          "default": "changeme123",
+          "label": "Server password",
+          "name": "SERVER_PASSWORD"
+        },
+        {
+          "default": "Welcome to my server!",
+          "label": "Message of the day",
+          "name": "MOTD"
+        }
+      ],
       "logo": "https://avatars.githubusercontent.com/u/584474",
       "name": "terraria-server",
       "platform": "linux",
@@ -23834,7 +23881,7 @@
         "Web",
         "Network"
       ],
-      "description": "The Cloud Native Application Proxy",
+      "description": "The Cloud Native Application Proxy. Source: https://github.com/traefik/traefik",
       "env": [],
       "logo": "https://raw.githubusercontent.com/traefik/traefik/master/docs/content/assets/img/traefik.logo.png",
       "name": "traefik",
@@ -24920,8 +24967,29 @@
         "Gaming",
         "Other"
       ],
-      "description": "Valheim dedicated gameserver in Docker with full modding support",
-      "env": [],
+      "description": "Valheim dedicated gameserver in Docker with full modding support. Source: https://github.com/lloesche/valheim-server-docker",
+      "env": [
+        {
+          "default": "My Server",
+          "label": "Server name (shown in the browser)",
+          "name": "SERVER_NAME"
+        },
+        {
+          "default": "Dedicated",
+          "label": "World/save name",
+          "name": "WORLD_NAME"
+        },
+        {
+          "default": "changeme123",
+          "label": "Server password (minimum 5 characters)",
+          "name": "SERVER_PASS"
+        },
+        {
+          "default": "Etc/UTC",
+          "label": "Timezone",
+          "name": "TZ"
+        }
+      ],
       "logo": "https://avatars.githubusercontent.com/u/82116562",
       "name": "valheim-server-docker",
       "platform": "linux",
@@ -26154,10 +26222,30 @@
         "CI CD",
         "Development"
       ],
-      "description": "A simple yet powerful CI/CD engine with great extensibility, built for containers",
-      "env": [],
+      "description": "A simple yet powerful CI/CD engine with great extensibility, built for containers. Source: https://github.com/woodpecker-ci/woodpecker",
+      "env": [
+        {
+          "default": "http://localhost:8000",
+          "label": "Server public URL",
+          "name": "WOODPECKER_HOST"
+        },
+        {
+          "default": "changeme-generate-a-long-random-secret",
+          "label": "Agent secret (shared random string)",
+          "name": "WOODPECKER_AGENT_SECRET"
+        },
+        {
+          "label": "GitHub OAuth Client ID",
+          "name": "WOODPECKER_GITHUB_CLIENT"
+        },
+        {
+          "label": "GitHub OAuth Client Secret",
+          "name": "WOODPECKER_GITHUB_SECRET"
+        }
+      ],
       "logo": "https://avatars.githubusercontent.com/u/84780935",
       "name": "woodpecker-ci",
+      "note": "Woodpecker requires a forge and will not start until one is configured. Register a GitHub OAuth app (Authorization callback URL: <your WOODPECKER_HOST>/authorize) and paste the Client ID and Secret above. To use Gitea, Forgejo, GitLab or Bitbucket instead, edit the stack's WOODPECKER_* forge variables. See https://woodpecker-ci.org/docs",
       "platform": "linux",
       "repository": {
         "stackfile": "sources/stacks/woodpecker-ci.yml",
@@ -26779,8 +26867,19 @@
         "Networking",
         "VPN"
       ],
-      "description": "ZeroTier network controller with a web UI",
-      "env": [],
+      "description": "ZeroTier network controller with a web UI. Source: https://github.com/sinamics/ztnet",
+      "env": [
+        {
+          "default": "http://localhost:3000",
+          "label": "Public URL of the web UI (e.g. http://your-host-ip:3000)",
+          "name": "NEXTAUTH_URL"
+        },
+        {
+          "default": "changeme-generate-a-long-random-secret",
+          "label": "Auth secret (long random string)",
+          "name": "NEXTAUTH_SECRET"
+        }
+      ],
       "logo": "https://avatars.githubusercontent.com/u/4173285",
       "name": "ztnet",
       "platform": "linux",

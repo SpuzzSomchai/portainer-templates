@@ -1,6 +1,30 @@
 {
   "entries": [
     {
+      "version": "v1.0.8",
+      "previous": "v1.0.7",
+      "date": "2026-07-25",
+      "templateCount": 676,
+      "added": [],
+      "removed": [],
+      "updated": [
+        {
+          "title": "Dashy (container)",
+          "fields": [
+            "categories",
+            "description",
+            "env",
+            "logo",
+            "maintainer",
+            "name",
+            "note",
+            "ports",
+            "volumes"
+          ]
+        }
+      ]
+    },
+    {
       "version": "v1.0.7",
       "previous": "v1.0.6",
       "date": "2026-07-25",

@@ -1,0 +1,93 @@
+{
+  "templates": [
+    {
+      "categories": [
+        "Dashboard",
+        "Monitoring"
+      ],
+      "description": "A self-hosted dashboard that puts all your feeds in one place. Source: https://github.com/glanceapp/glance",
+      "env": [],
+      "image": "glanceapp/glance:latest",
+      "logo": "https://avatars.githubusercontent.com/u/159397742",
+      "name": "glance",
+      "note": "Glance needs a glance.yml config file in the mounted /app/config directory to start. Add one (see the project's example configuration) and restart.",
+      "platform": "linux",
+      "ports": [
+        "8080:8080/tcp"
+      ],
+      "restart_policy": "unless-stopped",
+      "title": "Glance",
+      "type": 1,
+      "volumes": [
+        {
+          "container": "/app/config"
+        }
+      ]
+    },
+    {
+      "categories": [
+        "Monitoring",
+        "Networking"
+      ],
+      "description": "Automated developer-oriented status page with highly configurable health checks. Source: https://github.com/TwiN/gatus",
+      "env": [],
+      "image": "twinproduction/gatus:stable",
+      "logo": "https://avatars.githubusercontent.com/u/15699766",
+      "name": "gatus",
+      "note": "Mount a config.yaml into /config to define your health checks; Gatus starts with defaults if none is present.",
+      "platform": "linux",
+      "ports": [
+        "8080:8080/tcp"
+      ],
+      "restart_policy": "unless-stopped",
+      "title": "Gatus",
+      "type": 1,
+      "volumes": [
+        {
+          "container": "/config"
+        }
+      ]
+    },
+    {
+      "categories": [
+        "Monitoring",
+        "Homelab"
+      ],
+      "description": "Self-hosted homelab dashboard, one container. Per-container GPU/VRAM attribution (which process holds the card, not just total load), Docker health/logs, systemd status, host vitals (CPU/RAM/disk/temps), multiple hosts over SSH. Alerts via Discord/ntfy/Telegram. Read-only MCP server on :9810. MIT. Source: https://github.com/SikamikanikoBG/homelab-monitor",
+      "env": [
+        {
+          "default": "10",
+          "description": "Seconds between samples",
+          "label": "SAMPLE_INTERVAL",
+          "name": "SAMPLE_INTERVAL"
+        },
+        {
+          "default": "180",
+          "description": "How long history is kept (days)",
+          "label": "RETENTION_DAYS",
+          "name": "RETENTION_DAYS"
+        }
+      ],
+      "image": "sikamikaniko123/homelab-monitor:latest",
+      "logo": "https://raw.githubusercontent.com/SikamikanikoBG/homelab-monitor/main/docs/logo-400.png",
+      "name": "homelab-monitor",
+      "network": "host",
+      "platform": "linux",
+      "ports": [],
+      "restart_policy": "unless-stopped",
+      "title": "HomeLab Monitor",
+      "type": 1,
+      "volumes": [
+        {
+          "bind": "/var/run/docker.sock",
+          "container": "/var/run/docker.sock",
+          "readonly": true
+        },
+        {
+          "container": "/data"
+        }
+      ]
+    }
+  ],
+  "version": "3"
+}

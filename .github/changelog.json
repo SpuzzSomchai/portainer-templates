@@ -1,6 +1,18 @@
 {
   "entries": [
     {
+      "version": "v1.0.9",
+      "previous": "v1.0.8",
+      "date": "2026-07-27",
+      "templateCount": 678,
+      "added": [
+        "FluxDown",
+        "Pelorus"
+      ],
+      "removed": [],
+      "updated": []
+    },
+    {
       "version": "v1.0.8",
       "previous": "v1.0.7",
       "date": "2026-07-25",

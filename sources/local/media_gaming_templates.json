@@ -2,6 +2,40 @@
   "templates": [
     {
       "categories": [
+        "Downloaders",
+        "Tools"
+      ],
+      "description": "Multi-protocol download manager with a web UI. Handles HTTP/HTTPS, FTP, BitTorrent (DHT/magnet), eD2K/Kad, HLS and DASH, with dynamic file segmentation, token-bucket rate limiting and SQLite-backed resume. Exposes an aria2-compatible JSON-RPC API.",
+      "env": [
+        {
+          "default": "UTC",
+          "label": "Timezone",
+          "name": "TZ"
+        }
+      ],
+      "image": "ghcr.io/zerx-lab/fluxdown-server:0.2.3",
+      "logo": "https://cdn.jsdelivr.net/gh/zerx-lab/FluxDown@main/assets/logo/fluxdown_logo.svg",
+      "maintainer": "zerx-lab",
+      "name": "fluxdown",
+      "note": "First launch prints a one-time admin token to the container log: <code>docker logs &lt;container&gt; 2>&amp;1 | grep -i token</code>. The management API and the built-in MCP endpoint both require this token. Web UI is served on port 17800.",
+      "platform": "linux",
+      "ports": [
+        "17800:17800/tcp"
+      ],
+      "restart_policy": "unless-stopped",
+      "title": "FluxDown",
+      "type": 1,
+      "volumes": [
+        {
+          "container": "/data"
+        },
+        {
+          "container": "/root/Downloads"
+        }
+      ]
+    },
+    {
+      "categories": [
         "Media",
         "Books"
       ],

@@ -1,0 +1,141 @@
+{
+  "templates": [
+    {
+      "categories": [
+        "Downloaders",
+        "Tools"
+      ],
+      "description": "Multi-protocol download manager with a web UI. Handles HTTP/HTTPS, FTP, BitTorrent (DHT/magnet), eD2K/Kad, HLS and DASH, with dynamic file segmentation, token-bucket rate limiting and SQLite-backed resume. Exposes an aria2-compatible JSON-RPC API. GitHub: [zerx-lab/FluxDown](https://github.com/zerx-lab/FluxDown)",
+      "env": [
+        {
+          "default": "UTC",
+          "label": "Timezone",
+          "name": "TZ"
+        }
+      ],
+      "image": "ghcr.io/zerx-lab/fluxdown-server:0.2.3",
+      "logo": "https://cdn.jsdelivr.net/gh/zerx-lab/FluxDown@main/assets/logo/fluxdown_logo.svg",
+      "maintainer": "zerx-lab",
+      "name": "fluxdown",
+      "note": "First launch prints a one-time admin token to the container log: <code>docker logs &lt;container&gt; 2>&amp;1 | grep -i token</code>. The management API and the built-in MCP endpoint both require this token. Web UI is served on port 17800.",
+      "platform": "linux",
+      "ports": [
+        "17800:17800/tcp"
+      ],
+      "restart_policy": "unless-stopped",
+      "title": "FluxDown",
+      "type": 1,
+      "volumes": [
+        {
+          "container": "/data"
+        },
+        {
+          "container": "/root/Downloads"
+        }
+      ]
+    },
+    {
+      "categories": [
+        "Media",
+        "Downloaders"
+      ],
+      "description": "Sleek, self-hosted podcast manager that automatically downloads new episodes, offers a web UI for listening, and provides a GPodder-compatible sync API for mobile apps like AntennaPod. GitHub: [SamTV12345/PodFetch](https://github.com/SamTV12345/PodFetch)",
+      "env": [
+        {
+          "default": "sqlite:///app/db/podcast.db",
+          "label": "DATABASE_URL",
+          "name": "DATABASE_URL"
+        },
+        {
+          "default": "300",
+          "label": "POLLING_INTERVAL",
+          "name": "POLLING_INTERVAL"
+        },
+        {
+          "default": "false",
+          "label": "BASIC_AUTH",
+          "name": "BASIC_AUTH"
+        },
+        {
+          "default": "",
+          "label": "USERNAME",
+          "name": "USERNAME"
+        },
+        {
+          "default": "",
+          "label": "PASSWORD",
+          "name": "PASSWORD"
+        },
+        {
+          "default": "false",
+          "label": "GPODDER_INTEGRATION_ENABLED",
+          "name": "GPODDER_INTEGRATION_ENABLED"
+        }
+      ],
+      "image": "samuel19982/podfetch:latest",
+      "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/podfetch.png",
+      "name": "podfetch",
+      "note": "To use the GPodder sync API, set BASIC_AUTH=true together with USERNAME and PASSWORD, and set GPODDER_INTEGRATION_ENABLED=true. Documentation: https://samtv12345.github.io/PodFetch/",
+      "platform": "linux",
+      "ports": [
+        "8000:8000/tcp"
+      ],
+      "restart_policy": "unless-stopped",
+      "title": "PodFetch",
+      "type": 1,
+      "volumes": [
+        {
+          "container": "/app/podcasts",
+          "bind": "/portainer/Files/AppData/PodFetch/podcasts"
+        },
+        {
+          "container": "/app/db",
+          "bind": "/portainer/Files/AppData/PodFetch/db"
+        }
+      ]
+    },
+    {
+      "categories": [
+        "Media",
+        "Books"
+      ],
+      "description": "A free and open source comics, manga, and digital book server with OPDS support. Source: https://github.com/stumpapp/stump",
+      "env": [
+        {
+          "default": "1000",
+          "label": "PUID",
+          "name": "PUID"
+        },
+        {
+          "default": "1000",
+          "label": "PGID",
+          "name": "PGID"
+        },
+        {
+          "default": "/config",
+          "label": "STUMP_CONFIG_DIR",
+          "name": "STUMP_CONFIG_DIR"
+        }
+      ],
+      "image": "aaronleopold/stump:latest",
+      "logo": "https://avatars.githubusercontent.com/u/114969632",
+      "name": "stump",
+      "platform": "linux",
+      "ports": [
+        "10801:10801/tcp"
+      ],
+      "restart_policy": "unless-stopped",
+      "title": "Stump",
+      "type": 1,
+      "volumes": [
+        {
+          "container": "/config"
+        },
+        {
+          "container": "/data"
+        }
+      ]
+    }
+  ],
+  "version": "3"
+}

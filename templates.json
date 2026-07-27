@@ -6635,7 +6635,7 @@
         "Downloaders",
         "Tools"
       ],
-      "description": "Multi-protocol download manager with a web UI. Handles HTTP/HTTPS, FTP, BitTorrent (DHT/magnet), eD2K/Kad, HLS and DASH, with dynamic file segmentation, token-bucket rate limiting and SQLite-backed resume. Exposes an aria2-compatible JSON-RPC API.",
+      "description": "Multi-protocol download manager with a web UI. Handles HTTP/HTTPS, FTP, BitTorrent (DHT/magnet), eD2K/Kad, HLS and DASH, with dynamic file segmentation, token-bucket rate limiting and SQLite-backed resume. Exposes an aria2-compatible JSON-RPC API. GitHub: [zerx-lab/FluxDown](https://github.com/zerx-lab/FluxDown)",
       "env": [
         {
           "default": "UTC",
@@ -18935,7 +18935,7 @@
       "type": 1,
       "title": "PodFetch",
       "name": "podfetch",
-      "description": "Sleek, self-hosted podcast manager that automatically downloads new episodes, offers a web UI for listening, and provides a GPodder-compatible sync API for mobile apps like AntennaPod.",
+      "description": "Sleek, self-hosted podcast manager that automatically downloads new episodes, offers a web UI for listening, and provides a GPodder-compatible sync API for mobile apps like AntennaPod. GitHub: [SamTV12345/PodFetch](https://github.com/SamTV12345/PodFetch)",
       "note": "To use the GPodder sync API, set BASIC_AUTH=true together with USERNAME and PASSWORD, and set GPODDER_INTEGRATION_ENABLED=true. Documentation: https://samtv12345.github.io/PodFetch/",
       "categories": [
         "Media",
@@ -23250,7 +23250,7 @@
         "AI",
         "Tools"
       ],
-      "description": "Self-owned AI control plane: governance gateway for Claude, OpenAI, and Gemini with policy checks, audit, rate limits, and MCP orchestration. Bundles Postgres.",
+      "description": "Self-owned AI control plane: governance gateway for Claude, OpenAI, and Gemini with policy checks, audit, rate limits, and MCP orchestration. Bundles Postgres. GitHub: [systempromptio/systemprompt-template](https://github.com/systempromptio/systemprompt-template)",
       "env": [
         {
           "name": "POSTGRES_PASSWORD",
@@ -23493,7 +23493,7 @@
         "Productivity",
         "Documentation"
       ],
-      "description": "Self-hostable, markdown-native team wiki: Go + PostgreSQL backend, a React editor with live Yjs collaboration, full-text + optional semantic search, WebDAV sync, public/blog spaces, Slidev decks and PDF export. A built-in MCP server makes AI agents first-class editors, and Atlas can generate a cited wiki from your existing sources (git, Jira). After the stack is up, open the app on :8780 and complete /setup to create your admin account.",
+      "description": "Self-hostable, markdown-native team wiki: Go + PostgreSQL backend, a React editor with live Yjs collaboration, full-text + optional semantic search, WebDAV sync, public/blog spaces, Slidev decks and PDF export. A built-in MCP server makes AI agents first-class editors, and Atlas can generate a cited wiki from your existing sources (git, Jira). After the stack is up, open the app on :8780 and complete /setup to create your admin account. GitHub: [zcag/tela](https://github.com/zcag/tela)",
       "env": [
         {
           "default": "http://localhost:8780",
@@ -23595,7 +23595,7 @@
     },
     {
       "categories": [
-        "Gaming",
+        "Games",
         "Other"
       ],
       "description": "Dedicated Terraria server in a Docker container. Source: https://github.com/hexlo/terraria-server-docker",
@@ -25045,7 +25045,7 @@
     },
     {
       "categories": [
-        "Gaming",
+        "Games",
         "Other"
       ],
       "description": "Valheim dedicated gameserver in Docker with full modding support. Source: https://github.com/lloesche/valheim-server-docker",

@@ -18932,32 +18932,11 @@
       "maintainer": "https://github.com/portainer/templates/"
     },
     {
-      "type": 1,
-      "title": "PodFetch",
-      "name": "podfetch",
-      "description": "Sleek, self-hosted podcast manager that automatically downloads new episodes, offers a web UI for listening, and provides a GPodder-compatible sync API for mobile apps like AntennaPod. GitHub: [SamTV12345/PodFetch](https://github.com/SamTV12345/PodFetch)",
-      "note": "To use the GPodder sync API, set BASIC_AUTH=true together with USERNAME and PASSWORD, and set GPODDER_INTEGRATION_ENABLED=true. Documentation: https://samtv12345.github.io/PodFetch/",
       "categories": [
         "Media",
         "Downloaders"
       ],
-      "platform": "linux",
-      "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/podfetch.png",
-      "image": "samuel19982/podfetch:latest",
-      "ports": [
-        "8000:8000/tcp"
-      ],
-      "restart_policy": "unless-stopped",
-      "volumes": [
-        {
-          "container": "/app/podcasts",
-          "bind": "/portainer/Files/AppData/PodFetch/podcasts"
-        },
-        {
-          "container": "/app/db",
-          "bind": "/portainer/Files/AppData/PodFetch/db"
-        }
-      ],
+      "description": "Sleek, self-hosted podcast manager that automatically downloads new episodes, offers a web UI for listening, and provides a GPodder-compatible sync API for mobile apps like AntennaPod. GitHub: [SamTV12345/PodFetch](https://github.com/SamTV12345/PodFetch)",
       "env": [
         {
           "default": "sqlite:///app/db/podcast.db",
@@ -18988,6 +18967,27 @@
           "default": "false",
           "label": "GPODDER_INTEGRATION_ENABLED",
           "name": "GPODDER_INTEGRATION_ENABLED"
+        }
+      ],
+      "image": "samuel19982/podfetch:latest",
+      "logo": "https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/podfetch.png",
+      "name": "podfetch",
+      "note": "To use the GPodder sync API, set BASIC_AUTH=true together with USERNAME and PASSWORD, and set GPODDER_INTEGRATION_ENABLED=true. Documentation: https://samtv12345.github.io/PodFetch/",
+      "platform": "linux",
+      "ports": [
+        "8000:8000/tcp"
+      ],
+      "restart_policy": "unless-stopped",
+      "title": "PodFetch",
+      "type": 1,
+      "volumes": [
+        {
+          "container": "/app/podcasts",
+          "bind": "/portainer/Files/AppData/PodFetch/podcasts"
+        },
+        {
+          "container": "/app/db",
+          "bind": "/portainer/Files/AppData/PodFetch/db"
         }
       ],
       "id": 470

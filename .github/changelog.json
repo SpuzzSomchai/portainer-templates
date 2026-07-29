@@ -1,6 +1,17 @@
 {
   "entries": [
     {
+      "version": "v1.0.12",
+      "previous": "v1.0.11",
+      "date": "2026-07-29",
+      "templateCount": 679,
+      "added": [
+        "cairn"
+      ],
+      "removed": [],
+      "updated": []
+    },
+    {
       "version": "v1.0.11",
       "previous": "v1.0.10",
       "date": "2026-07-27",

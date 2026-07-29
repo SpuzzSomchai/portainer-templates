@@ -87,6 +87,30 @@
           "container": "/data"
         }
       ]
+    },
+    {
+      "categories": [
+        "Dashboard",
+        "Web"
+      ],
+      "description": "The directory page for the people you host services for: no account, multilingual, live status, one tiny container. Source: https://github.com/MorganKryze/cairn",
+      "env": [],
+      "image": "ghcr.io/morgankryze/cairn:latest",
+      "logo": "https://raw.githubusercontent.com/MorganKryze/cairn/main/docs/assets/brand/cairn.svg",
+      "name": "cairn",
+      "note": "Starts with no configuration at all and serves a getting-started page. Drop a services.yaml into the mounted /config directory and it reloads within seconds, no restart needed. It writes nothing at runtime, so it also runs read-only with every capability dropped.",
+      "platform": "linux",
+      "ports": [
+        "8080:8080/tcp"
+      ],
+      "restart_policy": "unless-stopped",
+      "title": "cairn",
+      "type": 1,
+      "volumes": [
+        {
+          "container": "/config"
+        }
+      ]
     }
   ],
   "version": "3"

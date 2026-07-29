@@ -57,6 +57,7 @@ jobs:
 
       # Commit and push the outputed JSON files
       - name: Commit and push generated files ⤴️
+        id: commit
         env:
           DATE: ${{ steps.date.outputs.date }}
           # BOT_TOKEN so the push triggers the Tag workflow (GITHUB_TOKEN wouldn't)
@@ -73,6 +74,7 @@ jobs:
           else
             git commit -m "Updates templates (auto-generated, on ${DATE})"
             git push "$remote" HEAD:main
+            echo "templates_changed=true" >> "$GITHUB_OUTPUT"
           fi
           git add .github/README.md
           if git diff --staged --quiet; then
@@ -81,3 +83,13 @@ jobs:
             git commit -m "Updates template + source list in docs (auto-generated, on ${DATE})"
             git push "$remote" HEAD:main
           fi
+
+      # Ping Netlify's build hook so the website branch redeploys with the new templates
+      - name: Trigger Netlify rebuild 🚀
+        if: steps.commit.outputs.templates_changed == 'true'
+        continue-on-error: true
+        env:
+          NETLIFY_BUILD_HOOK: ${{ secrets.NETLIFY_BUILD_HOOK }}
+        run: |
+          [ -n "${NETLIFY_BUILD_HOOK:-}" ] || { echo "No build hook set, skipping."; exit 0; }
+          curl -fsSL -X POST -d '{}' "$NETLIFY_BUILD_HOOK"
